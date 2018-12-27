@@ -1,0 +1,184 @@
+
+INSERT INTO OldPEOPLE (O_id,O_name,O_dob,O_rel_add,O_rel_phn,O_blood_grp,O_joining_date,O_education,O_hobby,O_diease,O_religion,O_food_restriction,O_status) 
+VALUES ( 'O_1','Syeda Banu', to_date('12-Jan-1931', 'DD-MON-YYYY'),'House No. 19. Road No. 6, Baridhara 1212. Dhaka','02-9842437','A-',to_date('10-Jun-2006', 'DD-MON-YYYY'),'SSC passed','reciting quran','High pressure','Islam','high salt foods,egg,meat,hilsha fish','Alive');
+INSERT INTO OldPEOPLE (O_id,O_name,O_dob,O_rel_add,O_rel_phn,O_blood_grp,O_joining_date,O_education,O_hobby,O_diease,O_religion,O_food_restriction,O_status) 
+VALUES ( 'O_2','Hafija', to_date('19-Jun-1937', 'DD-MON-YYYY'),'1419 Westwood Blvd in Los Angeles, California','+916-654-5266','A+',to_date('15-Jul-2006', 'DD-MON-YYYY'),'8th grade passed','Reading','muscle weakness','Islam','high spicy foods','Alive');
+INSERT INTO OldPEOPLE (O_id,O_name,O_dob,O_rel_add,O_rel_phn,O_blood_grp,O_joining_date,O_education,O_hobby,O_diease,O_religion,O_food_restriction,O_status) 
+VALUES ( 'O_3','Ambia Khanom', to_date('01-Mar-1930', 'DD-MON-YYYY'),'House # 13, Road # 08,Baridhara Diplomatic Zone, Dhaka','02-58654773','A-',to_date('1-Mar-2009', 'DD-MON-YYYY'),'5th grade passed','Sewing','Bronchial','Islam','Peanuts, Eggs, Soy, Wheat','Alive');
+INSERT INTO OldPEOPLE (O_id,O_name,O_dob,O_rel_add,O_rel_phn,O_blood_grp,O_joining_date,O_diease,O_religion,O_status,O_date_of_dead,O_reason_of_dead,O_burried_place) 
+VALUES ( 'O_4','Julekha', to_date('12-Feb-1921', 'DD-MON-YYYY'),'73/B Kemal Ataturk Avenue, Banani, Dhaka-1213','02-75476868','B+',to_date('10-Jun-2006', 'DD-MON-YYYY'),'Diabetes','Islam','Dead',to_date('4-Dec-2016', 'DD-MON-YYYY'),'Cancer','Banani graveyard');
+INSERT INTO OldPEOPLE (O_id,O_name,O_dob,O_rel_add,O_rel_phn,O_blood_grp,O_joining_date,O_education,O_hobby,O_diease,O_religion,O_food_restriction,O_status) 
+VALUES ( 'O_5','Rana Khan', to_date('04-Jan-1930', 'DD-MON-YYYY'),'House No. 19. Road No. 6, Baridhara 1212. Dhaka','0183254354','O+',to_date('01-Dec-2007', 'DD-MON-YYYY'),'8th grade passed','reciting quran','Diabetes','Islam','Sweets','Alive');
+?
+
+SELECT * FROM OldPEOPLE;
+
+CREATE TABLE TREATS
+(
+O_id VARCHAR2(12),
+doc_id VARCHAR2(30),
+T_date DATE,
+T_fee NUMERIC CHECK(T_fee>0),
+CONSTRAINT TREATS_T_fee_ck CHECK(T_fee>0),
+CONSTRAINT TREATS_O_id_FK FOREIGN KEY(O_id) REFERENCES OldPEOPLE(O_id) ON DELETE CASCADE,
+CONSTRAINT TREATS_doc_id_FK FOREIGN KEY(doc_id) REFERENCES DOCTOR(doc_id) ON DELETE CASCADE
+);
+
+INSERT INTO TREATS (O_id,doc_id,T_date,T_fee) 
+VALUES ( 'O_1', 'doc_1', to_date('02-Jan-2017', 'DD-MON-YYYY'), 500);
+INSERT INTO TREATS (O_id,doc_id,T_date,T_fee) 
+VALUES ( 'O_2', 'doc_4', to_date('02-Jan-2017', 'DD-MON-YYYY'), 600);
+INSERT INTO TREATS (O_id,doc_id,T_date,T_fee) 
+VALUES ( 'O_3', 'doc_3', to_date('02-Jan-2017', 'DD-MON-YYYY'), 400);
+INSERT INTO TREATS (O_id,doc_id,T_date,T_fee) 
+VALUES ( 'O_4', 'doc_5', to_date('30-Nov-2016', 'DD-MON-YYYY'), 500);
+INSERT INTO TREATS (O_id,doc_id,T_date,T_fee) 
+VALUES ( 'O_5', 'doc_2', to_date('02-Jan-2017', 'DD-MON-YYYY'), 500);
+
+
+
+
+CREATE TABLE RELATES
+(
+OR_id VARCHAR2(12),
+O_id VARCHAR2(12),
+O_relation VARCHAR2(20),
+CONSTRAINT FK_OldPeopleRelative FOREIGN KEY (OR_id) REFERENCES OldPeopleRelative(OR_id) ON DELETE CASCADE,
+CONSTRAINT FK_OldPEOPLE FOREIGN KEY (O_id) REFERENCES OldPEOPLE(O_id) ON DELETE CASCADE);
+
+INSERT INTO RELATES (OR_id,O_id,O_relation) 
+VALUES ( 'OR_1', 'O_1','Mother');
+INSERT INTO RELATES (OR_id,O_id,O_relation) 
+VALUES ( 'OR_2', 'O_2','Sister');
+INSERT INTO RELATES (OR_id,O_id,O_relation) 
+VALUES ( 'OR_3', 'O_3','Mother');
+INSERT INTO RELATES (OR_id,O_id,O_relation) 
+VALUES ( 'OR_4', 'O_4','Sister');
+INSERT INTO RELATES (OR_id,O_id,O_relation) 
+VALUES ( 'OR_5', 'O_5','Father');
+
+SELECT * FROM RELATES;
+
+
+
+CREATE TABLE TAKE_CARE
+(
+EMP_ID VARCHAR2(10),
+O_id VARCHAR2(12),
+O_relation VARCHAR2(20),
+CONSTRAINT FK_EMPLOYEE FOREIGN KEY (EMP_ID) REFERENCES EMPLOYEE(EMP_ID) ON DELETE CASCADE,
+CONSTRAINT FK_OldPEOPLE FOREIGN KEY (O_id) REFERENCES OldPEOPLE(O_id) ON DELETE CASCADE);
+
+INSERT INTO TAKE_CARE (EMP_ID,O_id) 
+VALUES ( 'E_1', 'O_1');
+INSERT INTO TAKE_CARE (EMP_ID,O_id) 
+VALUES ( 'E_2', 'O_2');
+INSERT INTO TAKE_CARE (EMP_ID,O_id) 
+VALUES ( 'E_3', 'O_3');
+INSERT INTO TAKE_CARE (EMP_ID,O_id) 
+VALUES ( 'E_6', 'O_4');
+INSERT INTO TAKE_CARE (EMP_ID,O_id)  
+VALUES ( 'E_7', 'O_5');
+
+
+CREATE TABLE OldPEOPLE
+(
+O_id VARCHAR2(12),
+O_name VARCHAR2(20),
+O_dob DATE,
+O_rel_add VARCHAR2(80),
+O_rel_phn VARCHAR2(20),
+O_blood_grp VARCHAR2(12),
+O_joining_date DATE,
+O_education VARCHAR2(40),
+O_hobby VARCHAR2(50),
+O_diease VARCHAR2(40),
+O_religion VARCHAR2(12),
+O_food_restriction VARCHAR2(60),
+O_status VARCHAR2(12),
+O_date_of_dead VARCHAR2(40),
+O_reason_of_dead VARCHAR2(40),
+O_burried_place VARCHAR2(50),
+CONSTRAINT OldPEOPLE_O_id_pk PRIMARY KEY(O_id)
+);
+
+CREATE TABLE MED
+(
+O_id VARCHAR2(12),
+MED_NAME VARCHAR2(30),
+CONSTRAINT MED_O_ID_FK FOREIGN KEY (O_id) REFERENCES OldPeople(O_id) ON DELETE CASCADE
+
+)
+
+
+
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_1', 'Synthroid');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_1', 'Napa');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_1', 'Aricept');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_2', 'Remeron');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_2', 'Paracitamol');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_3', 'Ativan');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_3', 'Zoloft');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_5', 'Lisinopril');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_5', 'Aricept');
+INSERT INTO MED (O_id,MED_NAME) 
+VALUES ( 'O_5', 'Napa');
+
+4.CREATE TABLE OldPeopleRelative
+(
+OR_id VARCHAR2(12),
+OR_NID VARCHAR2(30),
+OR_name VARCHAR2(20),
+O_rel_add VARCHAR2(80),
+O_rel_email VARCHAR2(80),
+OR_blood_grp VARCHAR2(20),
+O_relation VARCHAR2(20),
+Ammount NUMERIC CHECK(Ammount>0),
+CONSTRAINT OldPeopleRelative_OR_id_pk PRIMARY KEY(OR_id)
+);
+
+INSERT INTO OldPeopleRelative (OR_id,OR_NID,OR_name,O_rel_add,O_rel_email,OR_blood_grp,O_relation,Ammount) 
+VALUES ( 'OR_1','24038240858023', 'Rohim Khan','House No. 19. Road No. 6, Baridhara 1212. Dhaka','abdul@yahoo.com','A+','Son', 5000);
+INSERT INTO OldPeopleRelative (OR_id,OR_NID,OR_name,O_rel_add,O_rel_email,OR_blood_grp,O_relation,Ammount) 
+VALUES ( 'OR_2','24038243254025' ,'Korim Abdullah','1419 Westwood Blvd in Los Angeles, California','abkola@yahoo.com', 'O+','Sister', 20000);
+INSERT INTO OldPeopleRelative (OR_id,OR_NID,OR_name,O_rel_add,O_rel_email,OR_blood_grp,O_relation,Ammount) 
+VALUES ( 'OR_3','24322340858022', 'Rahima Khatun','House # 13, Road # 08, Baridhara Diplomatic Zone, Dhaka','rajia@yahoo.com','A-','Daughter', 5000);
+INSERT INTO OldPeopleRelative (OR_id,OR_NID,OR_name,O_rel_add,O_rel_email,OR_blood_grp,O_relation) 
+VALUES ( 'OR_4','24038324238027' ,'Korima Chowdhury','73/B Kemal Ataturk Avenue, Banani, Dhaka-1213','korima@yahoo.com', 'B+','Brother');
+INSERT INTO OldPeopleRelative (OR_id,OR_NID,OR_name,O_rel_add,O_rel_email,OR_blood_grp,O_relation,Ammount) 
+VALUES ( 'OR_5','24038240435499', 'Topu Islam','Bulu Ocean Tower 40,Banani, Dhaka-1213','rohoman@yahoo.com', 'O-','Son', 
+
+SELECT * FROM OldPeopleRelative;
+
+5.CREATE TABLE OR_PHONE
+(
+OR_id VARCHAR2(12),
+O_rel_phn VARCHAR2(20),
+CONSTRAINT FK_OR_PHONE FOREIGN KEY (OR_id) REFERENCES OldPeopleRelative(OR_id) ON DELETE CASCADE
+);
+
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_1', '+880192-4832472');
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_1', '+8800192-8747843');
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_2', '02-9472827');
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_3', '+880173-8293874');
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_3', '02-71937943');
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_5', '+880183-9378232');
+INSERT INTO OR_PHONE (OR_id,O_rel_phn) 
+VALUES ( 'OR_5', '02-581839349');
+
+select * from OR_PHONE;

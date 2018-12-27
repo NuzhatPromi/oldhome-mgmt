@@ -1,0 +1,323 @@
+CREATE TABLE DOCTOR
+(
+doc_name varchar2(30),
+doc_id  varchar2(30),
+doc_dob date,
+doc_nid varchar2(30),
+doc_email varchar2(30),
+doc_blood_grp varchar2(3),
+doc_joining_date date,
+doc_address varchar2(30),
+specialist varchar2(30),
+hospital_name varchar2(40),
+hospital_address varchar2(40),
+hospital_emergencynum varchar2(30),
+CONSTRAINT doc_id_pk PRIMARY KEY(doc_id)
+);
+
+CREATE TABLE DOCONTACT
+(
+doc_id  varchar2(30),
+doc_mobile varchar2(30),
+CONSTRAINT DOCONTACT_doc_id_fk FOREIGN KEY(doc_id)
+references Doctor(doc_id) on delete cascade
+
+);
+
+
+CREATE TABLE FOOD
+(
+f_day varchar2(12),
+food_type varchar2(12),
+food_cost number,
+food_menu varchar2(80),
+f_date date,
+period varchar2(12),
+serial_id varchar2(12),
+CONSTRAINT serial_id PRIMARY KEY(serial_id),
+CONSTRAINT food_cost_ck check(food_cost>0)
+);
+
+CREATE TABLE GOV_FUND
+(
+gv_date date,
+gv_id varchar2(30),
+gv_designation varchar2(40),
+gv_name varchar2(40),
+gv_amount number,
+CONSTRAINT gv_id PRIMARY KEY(gv_id),
+CONSTRAINT gv_amount_ck check(gv_amount>0)
+);
+
+
+
+CREATE TABLE PAYS
+(
+TRANSACTION_ID VARCHAR2(15),
+serial_id varchar2(12),
+CONSTRAINT pays_transaction_id_fk FOREIGN KEY(transaction_id) references account(transaction_id) on delete cascade,
+CONSTRAINT pays_serial_id_fk FOREIGN KEY(serial_id) references food(serial_id) on delete cascade
+);
+
+
+CREATE TABLE PROVIDES
+(
+TRANSACTION_ID VARCHAR2(15),
+gv_id varchar2(30),
+CONSTRAINT provides_transaction_id_fk FOREIGN KEY(transaction_id) references account(transaction_id) on delete cascade,
+CONSTRAINT provides_gf_id_fk FOREIGN KEY(gv_id) references gov_fund(gv_id) on delete cascade
+);
+
+INSERT INTO DOCTOR
+(doc_name,doc_id,doc_dob,doc_nid,doc_email,doc_blood_grp,doc_joining_date,doc_address,specialist,hospital_name,hospital_address,hospital_emergencynum)
+values
+('Jannatun Nayeem','doc_1',to_date('07-dec-1988','dd-mon-yyyy'),'bd568586087','nayeem@gmail.com','B+',to_date('07-dec-2010','dd-mon-yyyy'),'Mirpur-12 ,Dhaka cant','Gynecology','Dhaka CMH','Dhaka cantonment','+880 2-8750011');
+
+INSERT INTO DOCTOR
+(doc_name,doc_id,doc_dob,doc_nid,doc_email,doc_blood_grp,doc_joining_date,doc_address,specialist,hospital_name,hospital_address,hospital_emergencynum)
+values
+('Farhan khan','doc_2',to_date('16-jun-1985','dd-mon-yyyy'),'bd568586907','farhan@gmail.com','O+',to_date('16-dec-2007','dd-mon-yyyy'),'Mohammadpur,nurjahan road','EYE','Apollo','Bashubdhara','+880 2-55037242');
+INSERT INTO DOCTOR
+(doc_name,doc_id,doc_dob,doc_nid,doc_email,doc_blood_grp,doc_joining_date,doc_address,specialist,hospital_name,hospital_address,hospital_emergencynum)
+values
+('Urmisha bari','doc_3',to_date('02-dec-1988','dd-mon-yyyy'),'bd568586887','urmisha@gmail.com','B+',to_date('11-jan-2011','dd-mon-yyyy'),'Uttara','ENT','Square','Panthopath','+880 1713-377773');
+
+INSERT INTO DOCTOR
+(doc_name,doc_id,doc_dob,doc_nid,doc_email,doc_blood_grp,doc_joining_date,doc_address,specialist,hospital_name,hospital_address,hospital_emergencynum)
+values
+('Sakib mamun','doc_4',to_date('10-feb-1986','dd-mon-yyyy'),'bd599586907','sakib@gmail.com','A+',to_date('16-dec-2007','dd-mon-yyyy'),'Mohammadpur,shyamoli road','Oncology','Dhaka medical','Shahbag','+880 2-47118967');
+
+INSERT INTO DOCTOR
+(doc_name,doc_id,doc_dob,doc_nid,doc_email,doc_blood_grp,doc_joining_date,doc_address,specialist,hospital_name,hospital_address,hospital_emergencynum)
+values
+('Hasib khan','doc_5',to_date('13-mar-1982','dd-mon-yyyy'),'bd599586007','hasib@gmail.com','AB+',to_date('16-mar-2007','dd-mon-yyyy'),'Baridhara','Neurology','NIMS','Shahid Shahabuddin Shorok, Dhaka 1207','+880 2-9137305');
+
+
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_1','01980303686');
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_1','01710303686');
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_2','01980303606');
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_3','01190303686');
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_4','01935079475');
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_5','01980453680');
+
+INSERT INTO DOCONTACT
+(doc_id,doc_mobile)
+values('doc_5','01680303686');
+
+
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('00000','sunday','regular',500,'Ruti,vegetables,tea',to_date('12-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('00001','sunday','regular',3000,'Dal,rice,beaf/chicken,vegetables',to_date('12-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('00002','sunday','regular',450,'tea/coffee,biscuits',to_date('12-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('00003','sunday','regular',3000,'Dal,rice,egg,vegetables',to_date('12-01-2017','dd-mm-yyyy'),'Dinner');
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10004','monday','regular',600,'porota,egg,tea',to_date('13-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10005','monday','regular',2000,'Dal,rice,egg,vegetables',to_date('13-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10006','monday','regular',500,'tea/coffee,cake/biscuits',to_date('13-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10007','monday','regular',2000,'Dal,rice,egg/fish,vegetables',to_date('13-01-2017','dd-mm-yyyy'),'Dinner');
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11008','tuesday','regular',560,'ruti,tea,vegetables',to_date('14-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11009','tuesday','regular',3050,'Dal,rice,beaf/chicken,vegetables',to_date('14-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11010','tuesday','regular',560,'tea/coffee,samucha/singara/puri',to_date('14-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11011','tuesday','regular',3050,'Dal,rice,beaf/chicken,vegetables',to_date('14-01-2017','dd-mm-yyyy'),'Dinner');
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10112','wednesday','regular',300,'khichuri with vegetables',to_date('15-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10113','wednesday','regular',3090,'Dal,rice,fish,vegetables',to_date('15-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10114','wednesday','regular',560,'tea/coffee,cake/biscuits',to_date('15-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('10115','wednesday','regular',5000,'khichuri,fish/egg/chicken,vegetables',to_date('15-01-2017','dd-mm-yyyy'),'Dinner');
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11116','thursday','regular',450,'tea,porota,vegetables',to_date('16-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11117','thursday','regular',3000,'Dal,rice,beaf/chicken,vegetables',to_date('16-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11118','thursday','regular',500,'tea/coffee,cake/biscuits',to_date('16-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('11119','thursday','regular',3000,'Dal,rice,beaf/chicken,vegetables',to_date('16-01-2017','dd-mm-yyyy'),'Dinner');
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20021','Friday','special',550,'bread,jelly,tea',to_date('17-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20022','Friday','special',5050,'Dal,Biriyani chicken/beaf,kabab,vegetables',to_date('17-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20023','Friday','special',650,'tea/coffee,dal_puri/monglai',to_date('17-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20024','Friday','special',5000,'Dal,rice,beaf/chicken,kabab,vegetables',to_date('17-01-2017','dd-mm-yyyy'),'Dinner');
+
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20225','saturday','regular',700,'tea,ruti/porota,vegetables',to_date('18-01-2017','dd-mm-yyyy'),'Breakfast');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20226','saturday','regular',3000,'Dal,rice,beaf/chicken,vegetables',to_date('18-01-2017','dd-mm-yyyy'),'Lunch');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20227','saturday','regular',560,'tea/coffee,cake/biscuits',to_date('18-01-2017','dd-mm-yyyy'),'Evening');
+INSERT INTO FOOD
+(serial_id,f_day,food_type,food_cost,food_menu,f_date,period)
+values('20228','saturday','regular',3000,'Dal,rice,beaf/chicken,vegetables',to_date('18-01-2017','dd-mm-yyyy'),'Dinner');
+
+
+
+
+
+
+
+INSERT INTO GOV_FUND
+(gv_date,gv_id,gv_designation,gv_name,gv_amount)
+values(to_date('12-feb-2014','dd-mon-yyyy'),'g_1','Prime Minister','Sheikh Hasina Wazed',80000);
+
+INSERT INTO GOV_FUND
+(gv_date,gv_id,gv_designation,gv_name,gv_amount)
+values(to_date('22-sep-2010','dd-mon-yyyy'),'g_2','President','Abdul hamid',40000);
+
+INSERT INTO GOV_FUND
+(gv_date,gv_id,gv_designation,gv_name,gv_amount)
+values(to_date('12-mar-2011','dd-mon-yyyy'),'g_3','Minister of Religious Affairs','Matior Rahaman',50000);
+
+INSERT INTO GOV_FUND
+(gv_date,gv_id,gv_designation,gv_name,gv_amount)
+values(to_date('07-dec-2016','dd-mon-yyyy'),'g_4','Ministry of Finance','Abul Maal Abdul Muhith',100000);
+
+INSERT INTO GOV_FUND
+(gv_date,gv_id,gv_designation,gv_name,gv_amount)
+values(to_date('12-jan-2012','dd-mon-yyyy'),'g_5','Ministry of Health and Family Welfare','Mohammed Nasim',60000);
+
+
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_06','00000');
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_07','10004');
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_08','11008');
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_09','10112');
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_10','11116');
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_11','20021');
+INSERT INTO PAYS
+(transaction_id,serial_id)
+values('A_12','20225');
+
+
+INSERT INTO PROVIDES
+(transaction_id,gv_id)
+values('A_13','g_1');
+INSERT INTO PROVIDES
+(transaction_id,gv_id)
+values('A_14','g_2');
+INSERT INTO PROVIDES
+(transaction_id,gv_id)
+values('A_15','g_3');
+INSERT INTO PROVIDES
+(transaction_id,gv_id)
+values('A_16','g_4');
+INSERT INTO PROVIDES
+(transaction_id,gv_id)
+values('A_17','g_5');
+
+
+
+..........................................................................PROMI.....................................................................
+
+
+CREATE TABLE ACCOUNT
+(
+TRANSACTION_ID VARCHAR2(15),
+TRANSACTION_TYPE VARCHAR2(15),
+ACC_AMOUNT NUMBER(20,2),
+ACC_DATE DATE,
+CONSTRAINT ACCOUNT_TRANSACTION_ID_pk PRIMARY KEY(TRANSACTION_ID),
+CONSTRAINT ACC_AMOUNT_ck check(ACC_AMOUNT>0)
+);
+
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_01', 'Deposit', 125000, to_date('01-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_02', 'Deposit', 55000, to_date('01-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_03', 'Deposit', 80000, to_date('03-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_04', 'Deposit', 30000, to_date('04-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_05', 'Deposit', 100000, to_date('04-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_06', 'Withdrawal', 6950, to_date('12-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT,ACC_DATE) VALUES ('A_07', 'Withdrawal', 5100, to_date('13-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_08', 'Withdrawal', 7220, to_date('14-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_09', 'Withdrawal', 8950, to_date('15-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_10', 'Withdrawal', 6950, to_date('16-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_11', 'Withdrawal', 11250, to_date('17-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_12', 'Withdrawal', 7260, to_date('18-01-2017', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_13', 'Deposit', 80000, to_date('12-02-2014', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_14', 'Deposit', 40000, to_date('22-09-2010', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT, ACC_DATE) VALUES ('A_15', 'Deposit', 50000, to_date('12-03-2011', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT,ACC_DATE) VALUES ('A_16', 'Deposit', 60000, to_date('12-01-2012', 'DD-MM-YYYY'));
+INSERT INTO ACCOUNT (TRANSACTION_ID, TRANSACTION_TYPE, ACC_AMOUNT,ACC_DATE) VALUES ('A_17', 'Deposit', 100000, to_date('07-12-2016', 'DD-MM-YYYY'));
+
+
+http://localhost/OraclePHPconnection
+
+
+
+
+

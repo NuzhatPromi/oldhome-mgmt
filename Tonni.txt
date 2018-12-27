@@ -1,0 +1,102 @@
+Create table  TAKES
+(
+O_id VARCHAR2(12) ,
+O_quantity NUMBER ,
+med_name  VARCHAR2(20),
+CONSTRAINT TAKE_O_id_FK FOREIGN KEY(O_id) REFERENCES OldPEOPLE(O_id) ON DELETE CASCADE,
+CONSTRAINT TAKE_med_name_FK FOREIGN KEY(med_name) REFERENCES medicine(med_name) ON DELETE CASCADE,
+CONSTRAINT TAKES_O_quantity_ck CHECK( O_quantity>0)
+);
+
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_1',7,'Synthroid');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_1',5,'Napa');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_1',3,'Aricept');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_2',3,'Remeron');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_2',5,'Paracitamol');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_3',3,'Paracitamol');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_3',2,'Ativan');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_3',12,'Zoloft');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_5',10,'Lisinopril');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_5',3,'Aricept');
+INSERT INTO TAKES (O_id,O_quantity,med_name) VALUES ('O_5',7,'Napa');
+
+select *from  TAKES;
+
+Create table medicine
+(
+med_name VARCHAR2(20),
+med_quantity NUMBER  ,
+med_cost NUMBER  ,
+med_date DATE,
+CONSTRAINT medicine_med_name_pk PRIMARY KEY(med_name),
+CONSTRAINT  medicine_med_quantity_ck CHECK( med_quantity>0),
+CONSTRAINT medicine_med_cost_ck CHECK( med_cost>0)
+);
+
+INSERT INTO medicine (med_name,med_quantity ,med_cost,med_date) VALUES ('Synthroid',7,21,to_date('1/2/2017','dd/mm/yyyy'));
+INSERT INTO medicine (med_name,med_quantity ,med_cost,med_date) VALUES ('Napa',12,24,to_date('1/2/2017','dd/mm/yyyy'));
+INSERT INTO medicine (med_name,med_quantity ,med_cost,med_date) VALUES ('Aricept',6,30,to_date('1/2/2017','dd/mm/yyyy'));
+INSERT INTO medicine (med_name,med_quantity ,med_cost,med_date) VALUES ('Remeron',3,15,to_date('1/2/2017','dd/mm/yyyy'));
+INSERT INTO medicine (med_name,med_quantity ,med_cost,med_date) VALUES ('Paracitamol',5,10,to_date('1/2/2017','dd/mm/yyyy'));
+
+select *from  medicine;
+
+Create table  spends
+(
+med_name VARCHAR2(20),
+transaction_id VARCHAR2(15) ,
+CONSTRAINT account_transaction_id_FK FOREIGN KEY(transaction_id) REFERENCES account(transaction_id) ON DELETE CASCADE,
+CONSTRAINT medicine_med_name_FK FOREIGN KEY(med_name) REFERENCES medicine(med_name) ON DELETE CASCADE
+);
+
+INSERT INTO spends (med_name,transaction_id) VALUES ('Paracitamol','A_18');
+INSERT INTO spends (med_name,transaction_id) VALUES ('Aricept','A_18');
+INSERT INTO spends (med_name,transaction_id) VALUES ('Synthroid','A_18');
+INSERT INTO spends (med_name,transaction_id) VALUES ('Napa','A_18');
+INSERT INTO spends (med_name,transaction_id) VALUES ('Remeron','A_18');
+
+select *from  spends;
+
+Create table  donates
+(
+transaction_id VARCHAR2(15),
+d_id VARCHAR2(20),
+CONSTRAINT DONATES_transaction_id_FK FOREIGN KEY(transaction_id) REFERENCES account(transaction_id) ON DELETE CASCADE,
+CONSTRAINT DONATES_d_id_FK FOREIGN KEY(d_id) REFERENCES DONAR(d_id) ON DELETE CASCADE
+);
+
+INSERT INTO donates (transaction_id,d_id) VALUES ('A_19','D001');
+INSERT INTO donates (transaction_id,d_id) VALUES ('A_20','D002');
+INSERT INTO donates (transaction_id,d_id) VALUES ('A_21','D003');
+INSERT INTO donates (transaction_id,d_id) VALUES ('A_22','D004');
+INSERT INTO donates (transaction_id,d_id) VALUES ('A_23','D005');
+
+select *from  donates;
+
+Create table donar
+(
+d_id VARCHAR2(20),
+d_name VARCHAR2(50),
+d_ammount NUMBER ,
+d_phone NUMBER,
+d_date DATE,
+d_blood VARCHAR2(5),
+d_occupation VARCHAR2(20),
+d_address  VARCHAR2(50),
+CONSTRAINT donar_d_id_pk PRIMARY KEY(d_id),
+CONSTRAINT donar_d_ammount_ck CHECK( d_ammount>0)
+);
+
+INSERT INTO donar (d_id,d_name,d_ammount,d_phone,d_date,d_blood,d_occupation,d_address)
+VALUES ('D001','Syed Khaledur Rahman',10000,01711156119,to_date('28/2/2017','dd/mm/yyyy'),'B+','business-man','japan garden city,Mohammadpur,dhaka');
+INSERT INTO donar (d_id,d_name,d_ammount,d_phone,d_date,d_blood,d_occupation,d_address)
+VALUES ('D002','Rebeka Sultana',5000,01716598194,to_date('13/3/2017','dd/mm/yyyy'),'o+','house wife','Uttara,dhaka');
+INSERT INTO donar (d_id,d_name,d_ammount,d_phone,d_date,d_blood,d_occupation,d_address)
+VALUES ('D003','Syeda Nahiyan Khaledur',7000,01682077160,to_date('9/1/2017','dd/mm/yyyy'),'B+','service holder','Banani,dhaka');
+INSERT INTO donar (d_id,d_name,d_ammount,d_phone,d_date,d_blood,d_occupation,d_address)
+VALUES ('D004','Shahjahan kabir',20000,01921041024,to_date('14/2/2017','dd/mm/yyyy'),'B+','business-man','adabor,Mohammadpur,dhaka');
+INSERT INTO donar (d_id,d_name,d_ammount,d_phone,d_date,d_blood,d_occupation,d_address)
+VALUES ('D005','Ananya Sarkar',10000,01711153001,to_date('19/3/2017','dd/mm/yyyy'),'B+','teacher','Gulshan,dhaka');
+
+select *from  donar;
+
